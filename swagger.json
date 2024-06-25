@@ -1,0 +1,208 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Plant Finder",
+        "description": "An api and database for plant info",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:8085",
+    "basePath": "/",
+    "tags": [
+        {
+            "name": "Plants",
+            "description": "API for plant info"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/plants": {
+            "get": {
+                "tags": [
+                    "Get plants"
+                ],
+                "summary": "Get all plants, or filter by params",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "The plants common name"
+                    },
+                    {
+                        "name": "scientific_name",
+                        "in": "query",
+                        "description": "The plants scientific name"
+                    },
+                    {
+                        "name": "cycle",
+                        "in": "query",
+                        "description": "How long the cycle of the plant is"
+                    },
+                    {
+                        "name": "watering",
+                        "in": "query",
+                        "description": "How much water the plant needs"
+                    },
+                    {
+                        "name": "sunlight",
+                        "in": "query",
+                        "description": "How much sun the plant needs"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This endpoint returns all the plant data requested"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Add plant"
+                ],
+                "summary": "Add a new plant to the database using json data",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "in": "body",
+                    "name": "body",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/defenitions/plant"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "This endpoint adds a new plant to the database"
+                    }
+                }
+            }
+        },
+        "/plants/{id}": {
+            "get": {
+                "tags": [
+                    "Get plant"
+                ],
+                "summary": "Get a plant with id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID of the plant to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This endpoint returns the plant with the given id"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Update plant"
+                ],
+                "summary": "Update a plant with id",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID of the plant to retrieve"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/defenitions/plant"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This endpoint updates the plant with the given id"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Delete plant"
+                ],
+                "summary": "Delete a plant with id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "ID of the plant to retrieve"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "This endpoint deletes the plant with the given id"
+                    }
+                }
+            }
+        }
+    },
+    "defenitions": {
+        "plant": {
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the plant"
+                },
+                "scientific_name": {
+                    "type": "string",
+                    "description": "Scientific name of the plant"
+                },
+                "cycle": {
+                    "type": "string",
+                    "description": "Life cycle of the plant"
+                },
+                "watering": {
+                    "type": "string",
+                    "description": "Watering required for the plant"
+                },
+                "sunlight": {
+                    "type": "array",
+                    "description": "Sunlight required for the plant",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "default_image": {
+                    "type": "string",
+                    "description": "Image URL for the plant"
+                }
+            }
+        }
+    }
+}
